@@ -1,1 +1,78 @@
-<p>car works!</p>
+<div class="mb-2">
+  <a routerLink="/">Back to Car Listing</a>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <h1>{{functionName | titlecase }} Car</h1>
+    <form [formGroup]="carForm" (ngSubmit)="onSubmit()" id="carForm">
+
+      <div class="row mb-3">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <input
+              hidden
+              id="id"
+              formControlName="id"
+              class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="make">Make</label>
+            <input
+              type="text"
+              id="make"
+              formControlName="make"
+              class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-xs-6">
+          <div class="form-group">
+            <label for="model">Model</label>
+            <input
+              type="text"
+              id="model"
+              formControlName="model"
+              class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="colour">Colour</label>
+            <input
+              type="text"
+              id="colour"
+              class="form-control"
+              formControlName="colour"/>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="year">Year</label>
+            <input
+              type="number"
+              id="year"
+              class="form-control"
+              formControlName="year"
+              placeholder="YYYY"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="functionName !== 'view'">
+        <div class="col-xs-12">
+          <button type="submit" class="btn btn-success" [disabled]="!carForm.valid">{{functionName | titlecase }} Car
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
