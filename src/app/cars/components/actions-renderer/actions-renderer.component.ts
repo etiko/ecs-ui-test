@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {ICellRendererAngularComp} from 'ag-grid-angular';
 import {ICellRendererParams} from 'ag-grid-community';
 
+import {CarService} from '../../services/car.service';
+
 @Component({
   selector: 'app-actions-renderer',
   templateUrl: './actions-renderer.component.html',
@@ -13,7 +15,7 @@ export class ActionsRendererComponent implements ICellRendererAngularComp {
 
   params: ICellRendererParams | null = null;
 
-  constructor() {
+  constructor(private carService: CarService) {
   }
 
   agInit(params: ICellRendererParams): void {
@@ -28,5 +30,7 @@ export class ActionsRendererComponent implements ICellRendererAngularComp {
     return this.params?.value;
   }
 
-
+  delete(id: string): void {
+    this.carService.deleteCar(id);
+  }
 }

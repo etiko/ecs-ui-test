@@ -8,7 +8,7 @@ import {BehaviorSubject} from 'rxjs';
 export class CarService {
 
   carList: any;
-  carMessage$ = new BehaviorSubject(this.storage.retrieve('car'));
+  carMessage$ = new BehaviorSubject(this.storage.retrieve('cars'));
 
   constructor(private storage: LocalStorageService) {
   }
@@ -38,6 +38,13 @@ export class CarService {
     this.carList[carIndex] = car;
     this.storage.store('cars', this.carList);
     this.sendCarMessage(this.carList);
+  }
+
+  deleteCar(id) {
+    this.carList = this.getCars();
+    const filteredList = this.carList.filter((obj => obj.id !== id));
+    this.storage.store('cars', filteredList);
+    this.sendCarMessage(filteredList);
   }
 
   sendCarMessage(message) {
