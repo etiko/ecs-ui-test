@@ -1,6 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {LocalStorageService} from 'ngx-webstorage';
+import {ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
-import { CarComponent } from './car.component';
+import {CarComponent} from './car.component';
 
 describe('CarComponent', () => {
   let component: CarComponent;
@@ -8,7 +12,13 @@ describe('CarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CarComponent ]
+      declarations: [CarComponent],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        HttpClientModule
+      ],
+      providers: [LocalStorageService]
     })
     .compileComponents();
   }));

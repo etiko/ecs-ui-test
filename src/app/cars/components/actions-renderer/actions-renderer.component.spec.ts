@@ -1,6 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {HttpClientModule} from '@angular/common/http';
+import {LocalStorageService} from 'ngx-webstorage';
 
-import { ActionsRendererComponent } from './actions-renderer.component';
+import {ActionsRendererComponent} from './actions-renderer.component';
+
 
 describe('ActionsRendererComponent', () => {
   let component: ActionsRendererComponent;
@@ -8,7 +11,9 @@ describe('ActionsRendererComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ActionsRendererComponent ]
+      declarations: [ActionsRendererComponent],
+      imports: [HttpClientModule],
+      providers: [LocalStorageService]
     })
     .compileComponents();
   }));
