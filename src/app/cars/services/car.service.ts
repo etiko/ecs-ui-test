@@ -32,6 +32,14 @@ export class CarService {
     this.sendCarMessage(this.carList);
   }
 
+  updateCar(id, car) {
+    this.carList = this.getCars();
+    const carIndex = this.carList.findIndex((obj => obj.id === id));
+    this.carList[carIndex] = car;
+    this.storage.store('cars', this.carList);
+    this.sendCarMessage(this.carList);
+  }
+
   sendCarMessage(message) {
     this.carMessage$.next(message);
   }

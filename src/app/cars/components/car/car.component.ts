@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
 import {ActivatedRoute, Params, Router} from '@angular/router';
@@ -12,7 +12,7 @@ import {CarService} from '../../services/car.service';
   templateUrl: './car.component.html',
   styleUrls: ['./car.component.scss']
 })
-export class CarComponent implements OnInit {
+export class CarComponent implements OnInit, OnDestroy {
 
   id: string;
   editMode = false;
@@ -34,6 +34,11 @@ export class CarComponent implements OnInit {
       this.editMode = params.id != null;
       this.initForm();
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private initForm(): void {
@@ -63,10 +68,13 @@ export class CarComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const car = this.carForm.value;
-    car.id = uuid();
-    this.carService.addCar(car);
-
+    if (this.editMode) {
+      this.carService.updateCar(this.id, this.carForm.value);
+    } else {
+      const car = this.carForm.value;
+      car.id = uuid();
+      this.carService.addCar(car);
+    }
     this.router.navigate(['cars']);
   }
 
