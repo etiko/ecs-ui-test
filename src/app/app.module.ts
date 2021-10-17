@@ -7,16 +7,20 @@ import {HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {CarsModule} from './cars/cars.module';
+import {ActionsRendererComponent} from './cars/components/actions-renderer/actions-renderer.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ActionsRendererComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgxWebstorageModule.forRoot(),
-    AgGridModule.withComponents([]),
+    AgGridModule.withComponents([
+      ActionsRendererComponent
+    ]),
     HttpClientModule,
     CarsModule
   ],

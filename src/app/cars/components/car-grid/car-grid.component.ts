@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ColDef} from 'ag-grid-community';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
+import {CarService} from '../../services/car.service';
 import {ActionsRendererComponent} from '../actions-renderer/actions-renderer.component';
 
 @Component({
@@ -9,12 +12,15 @@ import {ActionsRendererComponent} from '../actions-renderer/actions-renderer.com
   styleUrls: ['./car-grid.component.scss']
 })
 export class CarGridComponent implements OnInit {
+
   columnDefs: ColDef[] = [];
   defaultColDef: any;
   rowData: any;
   frameworkComponents: any;
 
-  constructor() {
+  private destroy$ = new Subject();
+
+  constructor(private carService: CarService) {
   }
 
   ngOnInit(): void {
@@ -45,6 +51,15 @@ export class CarGridComponent implements OnInit {
     this.frameworkComponents = {
       actionRenderer: ActionsRendererComponent
     };
+    this.getCarList();
+  }
+
+  private getCarList() {
+    this.carService.getCarMessage()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(cars => {
+      this.rowData = cars;
+    });
   }
 
 }

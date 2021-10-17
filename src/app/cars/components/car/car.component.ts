@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {takeUntil} from 'rxjs/operators';
+import {v4 as uuid} from 'uuid';
 
 import {CarService} from '../../services/car.service';
 
@@ -21,7 +22,8 @@ export class CarComponent implements OnInit {
   private destroy$ = new Subject();
 
   constructor(private route: ActivatedRoute,
-              private carService: CarService) {
+              private carService: CarService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -61,7 +63,11 @@ export class CarComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.carForm.value);
+    const car = this.carForm.value;
+    car.id = uuid();
+    this.carService.addCar(car);
+
+    this.router.navigate(['cars']);
   }
 
 }
