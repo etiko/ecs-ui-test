@@ -5,7 +5,8 @@ import {AgGridModule} from 'ag-grid-angular';
 import {HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component'
+import {AppComponent} from './app.component';
+import {CarsModule} from './cars/cars.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {AppComponent} from './app.component'
     AppRoutingModule,
     NgxWebstorageModule.forRoot(),
     AgGridModule.withComponents([]),
-    HttpClientModule
+    HttpClientModule,
+    CarsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
