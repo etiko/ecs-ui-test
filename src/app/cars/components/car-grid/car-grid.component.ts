@@ -51,6 +51,11 @@ export class CarGridComponent implements OnInit {
     this.frameworkComponents = {
       actionRenderer: ActionsRendererComponent
     };
+    this.defaultColDef = {
+      sortable: true,
+      filter: true,
+      resizable: true,
+    };
     this.getCarList();
   }
 
