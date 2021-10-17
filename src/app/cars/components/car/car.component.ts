@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Subject} from 'rxjs';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {takeUntil} from 'rxjs/operators';
@@ -66,10 +66,10 @@ export class CarComponent implements OnInit, OnDestroy {
 
     this.carForm = new FormGroup({
       id: new FormControl(id),
-      make: new FormControl(make),
-      model: new FormControl(model),
-      colour: new FormControl(colour),
-      year: new FormControl(year)
+      make: new FormControl(make, [Validators.minLength(3), Validators.required]),
+      model: new FormControl(model, [Validators.minLength(3), Validators.required]),
+      colour: new FormControl(colour, [Validators.minLength(3), Validators.required]),
+      year: new FormControl(year, [Validators.minLength(4), Validators.maxLength(4), Validators.required])
     });
   }
 
@@ -89,6 +89,10 @@ export class CarComponent implements OnInit, OnDestroy {
     .subscribe(relatedWords => {
       this.relatedWords = relatedWords;
     });
+  }
+
+  get registerFormControl() {
+    return this.carForm.controls;
   }
 
 }
