@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {LocalStorageService} from 'ngx-webstorage';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class CarService {
   carList: any;
   carMessage$ = new BehaviorSubject(this.storage.retrieve('cars'));
 
-  constructor(private storage: LocalStorageService) {
+  constructor(private storage: LocalStorageService,
+              private http: HttpClient) {
   }
 
   getCars() {
@@ -45,6 +47,10 @@ export class CarService {
     const filteredList = this.carList.filter((obj => obj.id !== id));
     this.storage.store('cars', filteredList);
     this.sendCarMessage(filteredList);
+  }
+
+  getRelatedWords(model): Observable<any> {
+    return this.http.get(`https://api.datamuse.com/words?ml=${model}`);
   }
 
   sendCarMessage(message) {

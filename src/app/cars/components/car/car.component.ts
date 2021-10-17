@@ -18,6 +18,7 @@ export class CarComponent implements OnInit, OnDestroy {
   editMode = false;
   carForm: FormGroup;
   functionName: string;
+  relatedWords: any;
 
   private destroy$ = new Subject();
 
@@ -48,6 +49,11 @@ export class CarComponent implements OnInit, OnDestroy {
     let year;
     let id = '';
 
+    if (this.functionName === 'view') {
+      const car = this.carService.getCar(this.id);
+      this.getRelatedCarModelNames(car.model);
+    }
+
     if (this.editMode) {
       const car = this.carService.getCar(this.id);
 
@@ -76,6 +82,13 @@ export class CarComponent implements OnInit, OnDestroy {
       this.carService.addCar(car);
     }
     this.router.navigate(['cars']);
+  }
+
+  private getRelatedCarModelNames(model) {
+    this.carService.getRelatedWords(model).pipe(takeUntil(this.destroy$))
+    .subscribe(relatedWords => {
+      this.relatedWords = relatedWords;
+    });
   }
 
 }
