@@ -32,4 +32,43 @@ describe('CarComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should count number of input elements', () => {
+    const formElement = fixture.debugElement.nativeElement.querySelector('#carForm');
+    const inputElements = formElement.querySelectorAll('input');
+    expect(inputElements.length).toEqual(5);
+  });
+
+  it('should init values', () => {
+    const carFormGroup: any = component.carForm;
+    const carFormValues = {
+      make: '',
+      model: '',
+      colour: '',
+      year: null,
+      id: '',
+    };
+    expect(carFormGroup.value).toEqual(carFormValues);
+  });
+
+  it('should check make value before entering value', () => {
+    const carFormMakeElement: HTMLInputElement = fixture.debugElement.nativeElement.querySelector('#carForm').querySelectorAll('input')[1];
+    const makeValueFormGroup = component.carForm.get('make');
+    expect(carFormMakeElement.value).toEqual(makeValueFormGroup.value);
+    expect(makeValueFormGroup.errors).not.toBeNull();
+    expect(makeValueFormGroup.errors.required).toBeTruthy();
+  });
+
+  it('should check make value after entering value', () => {
+    const carFormMakeElement: HTMLInputElement = fixture.debugElement.nativeElement.querySelector('#carForm').querySelectorAll('input')[1];
+    carFormMakeElement.value = 'Mercedes';
+    carFormMakeElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      const makeValueFormGroup = component.carForm.get('make');
+      expect(makeValueFormGroup.errors).toBeNull();
+      expect(carFormMakeElement.value).toEqual(makeValueFormGroup.value);
+    });
+  });
+
 });

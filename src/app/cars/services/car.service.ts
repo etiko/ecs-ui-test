@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {LocalStorageService} from 'ngx-webstorage';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject, Subject} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({
@@ -9,7 +9,7 @@ import {HttpClient} from '@angular/common/http';
 export class CarService {
 
   carList: any;
-  carMessage$ = new BehaviorSubject(this.storage.retrieve('cars'));
+  carMessage$ = new ReplaySubject();
 
   constructor(private storage: LocalStorageService,
               private http: HttpClient) {
